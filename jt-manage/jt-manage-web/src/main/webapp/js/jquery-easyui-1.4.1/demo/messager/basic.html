@@ -1,0 +1,28 @@
+crement,
+  `name` varchar(255) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `role` */
+
+/*Table structure for table `user` */
+
+DROP TABLE IF EXISTS `user`;
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL auto_increment,
+  `username` varchar(20) default NULL,
+  `password` varchar(40) default NULL,
+  `nickname` varchar(60) default NULL,
+  `email` varchar(60) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `user` */
+
+insert  into `user`(`id`,`username`,`password`,`nickname`,`email`) values (16,'tom1','456','tom','tom@qq.com'),(17,'tom2','202cb962ac59075b964b07152d234b70','tom2','tom2@qq.com'),(22,'guanyu','202cb962ac59075b964b07152d234b70','guanyu','guanyu@126.com'),(23,'boss','ceb8447cc4ab78d2ec34cd9f11e4bed2','boss','boss@tedu.com'),(24,'朴乾','202cb962ac59075b964b07152d234b70','朴朴','PIAOQIAN@easymall.com'),(25,'guanyu1','202cb962ac59075b964b07152d234b70','guanyui1','guanyu@126.com'),(26,'tuhao1','698d51a19d8a121ce581499d7b701668','tuhao','tuhao@126.com'),(27,'tuhao2','698d51a19d8a121ce581499d7b701668','tuhao2','tuhao@126.com'),(28,'tuhao3','202cb962ac59075b964b07152d234b70','tuhao3','tuhao@126.com'),(33,'jinxf','202cb962ac59075b964b07152d234b70','靳幸福','xflovejava@126.com'),(34,'jinxf1','123','jinxf','jinxf@tedu.cn'),(35,'jinxf898','202cb962ac59075b964b07152d234b70','jinxf898','jinxf@tedu.cn');
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_S

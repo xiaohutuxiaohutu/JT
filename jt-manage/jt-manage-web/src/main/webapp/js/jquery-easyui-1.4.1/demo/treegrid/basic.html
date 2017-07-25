@@ -1,0 +1,43 @@
+= RShift(lMessageLength, 29)
+    
+    ConvertToWordArray = lWordArray
+End Function
+
+Function WordToHex(lValue)
+    Dim lByte
+    Dim lCount
+    
+    For lCount = 0 To 3
+        lByte = RShift(lValue, lCount * BITS_TO_A_BYTE) And m_lOnBits(BITS_TO_A_BYTE - 1)
+        WordToHex = WordToHex & Right("0" & Hex(lByte), 2)
+    Next
+End Function
+
+Function str2binl(str)
+     Dim nblk 
+     nblk = ( RShift((Len(str) + 8), 6) ) + 1 ' number of 16-word blocks
+     Dim blks()
+     ReDim blks(nblk*16 - 1)
+
+     Dim x
+     For x=0 To nblk * 16 - 1
+          blks(x) = 0
+     Next
+     
+     Dim arIdx
+     For x = 0 To Len(str)-1
+          arIdx = RShift(x,2)
+          blks(arIdx) = blks(arIdx) Or LShift(Asc(CStr(Mid(str,x+1,1))) And &hFF, ((x Mod 4) * 8))
+     Next
+     
+     blks(RShift(x,2)) = blks(RShift(x,2)) Or LShift(&h80, ((x Mod 4) * 8))
+     blks(nblk*16-2) = Len(str) * 8
+     str2binl = blks
+End Function
+
+Function bytarray2binl(barray)
+     Dim nblk
+     nblk = RShift((UBound(barray) + 8), 6) + 1 ' number of 16-word blocks
+     
+     Dim blks()
+     Redim blks(nblk

@@ -1,0 +1,19 @@
+atcher("/7.jsp").include(request, response);
+
+			<%@include file="xxx.jsp" %>
+			=============================
+			pageContext.forward("7.jsp"); 
+			pageContext.include("7.jsp");
+
+============================================
+四.JSP标签技术
+	在JSP页面中写入大量的java代码会导致JSP页面中html代码和java代码混杂在一起, 会造成页面非常的混乱, 难于维护
+	
+	于是在JSP的2.0版本中, sun提出了JSP标签技术, 推荐使用标签来代替JSP页面中java代码, 并且推荐, JSP2.0以后不要在JSP页面中出现任何一行java代码。
+
+	~~1.JSP标签 -- sun开发的JSP页面的标签技术, 包含了不少标签, 但是不太好用, 我们只要求掌握三个
+		<jsp:forward> 用来替代request.getRequestDispatcher().forward()
+		<jsp:include> 用来替代request.getRequestDispatcher().include()
+		<jsp:param> 配合前两个标签使用，可以在包含或转发时，带一些参数过去
+		
+	!!!2.el表达式 -- 表达式, 可以非常方便的替代JSP页�

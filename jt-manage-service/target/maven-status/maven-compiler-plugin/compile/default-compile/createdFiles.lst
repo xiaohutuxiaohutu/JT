@@ -1,0 +1,7 @@
+com\jt\manage\service\ItemService.class
+com\jt\manage\service\ItemParamService.class
+com\jt\manage\service\ItemParamItemService.class
+com\jt\manage\service\ItemCatService.class
+com\jt\manage\service\ContentCategoryService.class
+com\jt\manage\service\ContentService.class
+com\jt\manage\service\PropertyService.class

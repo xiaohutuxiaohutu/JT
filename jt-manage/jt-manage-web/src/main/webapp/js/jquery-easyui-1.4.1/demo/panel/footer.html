@@ -1,0 +1,32 @@
+package cn.tedu.xml;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.SAXReader;
+import org.dom4j.io.XMLWriter;
+
+import cn.tedu.utils.XMLUtils;
+
+/**
+ * 利用dom4j操作元素节点
+ */
+public class Demo2 {
+	// 1.查询第一本书的书名，并输出到控制台
+	// 2.查询第二本书的售价，并输出到控制台
+	// 3.给第一本书添加一个特价节点
+	// 4.给第二本书在作者节点前插入一个特价节点
+	// 5.删除第二本 书的特价节点
+	// 6.更新第一本书的特价节点的内容为19.8元
+	private static String xmlpath = "book.xml";
+
+	public static void main(String[

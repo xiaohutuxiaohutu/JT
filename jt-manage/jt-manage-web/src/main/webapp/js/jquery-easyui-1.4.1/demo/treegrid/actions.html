@@ -1,0 +1,86 @@
+a, b, c, d, x, s, ac)
+    a = AddUnsigned(a, AddUnsigned(AddUnsigned(MD5_G(b, c, d), x), ac))
+    a = RotateLeft(a, s)
+    a = AddUnsigned(a, b)
+End Sub
+
+Sub MD5_HH(a, b, c, d, x, s, ac)
+    a = AddUnsigned(a, AddUnsigned(AddUnsigned(MD5_H(b, c, d), x), ac))
+    a = RotateLeft(a, s)
+    a = AddUnsigned(a, b)
+End Sub
+
+Sub MD5_II(a, b, c, d, x, s, ac)
+    a = AddUnsigned(a, AddUnsigned(AddUnsigned(MD5_I(b, c, d), x), ac))
+    a = RotateLeft(a, s)
+    a = AddUnsigned(a, b)
+End Sub
+
+Function MD5_F(x, y, z)
+    MD5_F = (x And y) Or ((Not x) And z)
+End Function
+
+Function MD5_G(x, y, z)
+    MD5_G = (x And z) Or (y And (Not z))
+End Function
+
+Function MD5_H(x, y, z)
+    MD5_H = (x Xor y Xor z)
+End Function
+
+Function MD5_I(x, y, z)
+    MD5_I = (y Xor (x Or (Not z)))
+End Function
+
+'
+' utility functions
+'
+Function LShift(lValue, iShiftBits)
+    If iShiftBits = 0 Then
+        LShift = lValue
+        Exit Function
+    ElseIf iShiftBits = 31 Then
+        If lValue And 1 Then
+            LShift = &H80000000
+        Else
+            LShift = 0
+        End If
+        Exit Function
+    ElseIf iShiftBits < 0 Or iShiftBits > 31 Then
+        Err.Raise 6
+    End If
+
+    If (lValue And m_l2Power(31 - iShiftBits)) Then
+        LShift = ((lValue And m_lOnBits(31 - (iShiftBits + 1))) * m_l2Power(iShiftBits)) Or &H80000000
+    Else
+        LShift = ((lValue And m_lOnBits(31 - iShiftBits)) * m_l2Power(iShiftBits))
+    End If
+End Function
+
+Function RShift(lValue, iShiftBits)
+    If iShiftBits = 0 Then
+        RShift = lValue
+        Exit Function
+    ElseIf iShiftBits = 31 Then
+        If lValue And &H80000000 Then
+            RShift = 1
+        Else
+            RShift = 0
+        End If
+        Exit Function
+    ElseIf iShiftBits < 0 Or iShiftBits > 31 Then
+        Err.Raise 6
+    End If
+    
+    RShift = (lValue And &H7FFFFFFE) \ m_l2Power(iShiftBits)
+
+    If (lValue And &H80000000) Then
+        RShift = (RShift Or (&H40000000 \ m_l2Power(iShiftBits - 1)))
+    End If
+End Function
+
+Function RotateLeft(lValue, iShiftBits)
+    RotateLeft = LShift(lValue, iShiftBits) Or RShift(lValue, (32 - iShiftBits))
+End Function
+
+Function AddUnsigned(

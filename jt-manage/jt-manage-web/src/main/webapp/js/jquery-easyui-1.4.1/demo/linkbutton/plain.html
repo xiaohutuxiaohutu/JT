@@ -1,0 +1,46 @@
+<!-- #include file="hmac-md5.asp" -->
+<!-- #include file="merchantProperties.asp" -->
+<%
+'**************************************************
+'* @Description 易宝支付产品通用支付接口范例 
+'* @V3.0
+'* @Author rui.xin
+'**************************************************
+
+	Dim reqURL_onLine
+	Dim reqURL_QryOrd
+	Dim reqURL_RefOrd
+	Dim p0_Cmd
+	Dim p9_SAF
+	Dim sbOld
+
+	
+Function HTMLcommom(p1_MerId,p2_Order,p3_Amt,p4_Cur,p5_Pid,p6_Pcat,p7_Pdesc,p8_Url,pa_MP,pd_FrpId,pr_NeedResponse)
+
+	'	在线支付请求地址,无需更改
+	'reqURL_onLine = "https://www.yeepay.com/app-merchant-proxy/node"    '	正式地址
+	reqURL_onLine = "http://tech.yeepay.com:8080/robot/debug.action"    '	测试使用
+	'测试时必须使用范例中提供的测试商户编号和密钥（测试商户编号及密钥见范例程序。）
+	'1.将支付/查询/退款请求发送到该地址；
+	'2.该应用会将请求参数逐一分析，如请求有问题，则会报告详细信息；
+	'3.请求参数如正确无误，该应用将生成一个模拟的支付成功数据，您可以使用该数据测试支付结果的接收程序。
+
+	' 业务类型
+	''在线支付请求，固定值 ”Buy” .	
+	p0_Cmd = "Buy"
+	
+	'	送货地址
+	''为“1”: 需要用户将送货地址留在易宝支付系统;为“0”: 不需要，默认为 ”0”.
+	p9_SAF = "0"				'需要填写送货信息 0：不需要  1:需要
+	
+	sbOld  = ""
+
+	'	进行签名处理，一定按照文档中标明的签名顺序进行
+	sbOld = sbOld + p0_Cmd
+	sbOld = sbOld + p1_MerId
+	sbOld = sbOld + p2_Order
+	sbOld = sbOld + CStr(p3_Amt)		
+	sbOld = sbOld + p4_Cur					
+	sbOld = sbOld + p5_Pid
+	sbOld = sbOld + p6_Pcat
+	s

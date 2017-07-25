@@ -1,0 +1,8 @@
+com\jt\manage\pojo\Item.class
+com\jt\manage\pojo\ItemDesc.class
+com\jt\manage\pojo\ContentCategory.class
+com\jt\manage\pojo\Content.class
+com\jt\manage\pojo\ItemParamItem.class
+com\jt\manage\pojo\PicUploadResult.class
+com\jt\manage\pojo\ItemParam.class
+com\jt\manage\pojo\ItemCat.class

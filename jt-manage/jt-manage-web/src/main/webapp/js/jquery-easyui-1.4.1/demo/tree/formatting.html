@@ -1,0 +1,31 @@
+package cn.tedu.utils;
+
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Method;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class BeanHandler<T> implements ResultSetHandler<T> {
+	private Class<T> clz;
+	//new BeanHandler<User>(User.class)
+	public BeanHandler(Class<T> clz){
+		this.clz = clz;
+	}
+	//rs-->User user
+	public T handle(ResultSet rs) throws Exception {
+		if(rs.next()){
+			//创建对象 User user
+			T t = clz.newInstance();
+			//从结果集对象rs中获取T的对象信息
+			BeanInfo bi = Introspector.getBeanInfo(clz);
+			PropertyDescriptor pds[] = bi.getPropertyDescriptors();
+			for(PropertyDescriptor pd:pds){
+				Method mtd = pd.getWriteMethod();//setXxx(...)
+				//mtd.invoke(t, rs.getObject("name"));
+				//user.setName(rs.getString("name"))
+				String pdName = pd.getName();//获取属性的名称<->数据库表中的字段
+				try{//为了解决不存在列的取值：比如password1,class
+					mtd.invoke(t, rs.getObject(pdName));
+				}c

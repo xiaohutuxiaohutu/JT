@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jt.manage.mapper.ItemParamMapper">
+<select id="queryItemParamList" resultType="ItemParam">
+<!-- select * from tb_item_param order by updated desc -->
+SELECT tb_item_param.*,c.name item_cat_name FROM tb_item_param
+LEFT JOIN
+(SELECT * FROM tb_item_cat)c
+ON tb_item_param.item_cat_id  =  c.id
+order by updated desc
+</select>
+	
+<select id="selectItemParamByItemId" resultType="ItemParam">
+ select * from tb_item_param where item_cat_id=#{itemId}
+</select>
+</mapper>

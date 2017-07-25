@@ -1,0 +1,25 @@
+7452301
+    b = &HEFCDAB89
+    c = &H98BADCFE
+    d = &H10325476
+
+    For k = 0 To UBound(x)-1 Step 16
+        AA = a
+        BB = b
+        CC = c
+        DD = d
+    
+        MD5_FF a, b, c, d, x(k + 0), S11, &HD76AA478
+        MD5_FF d, a, b, c, x(k + 1), S12, &HE8C7B756
+        MD5_FF c, d, a, b, x(k + 2), S13, &H242070DB
+        MD5_FF b, c, d, a, x(k + 3), S14, &HC1BDCEEE
+        MD5_FF a, b, c, d, x(k + 4), S11, &HF57C0FAF
+        MD5_FF d, a, b, c, x(k + 5), S12, &H4787C62A
+        MD5_FF c, d, a, b, x(k + 6), S13, &HA8304613
+        MD5_FF b, c, d, a, x(k + 7), S14, &HFD469501
+        MD5_FF a, b, c, d, x(k + 8), S11, &H698098D8
+        MD5_FF d, a, b, c, x(k + 9), S12, &H8B44F7AF
+        MD5_FF c, d, a, b, x(k + 10), S13, &HFFFF5BB1
+        MD5_FF b, c, d, a, x(k + 11), S14, &H895CD7BE
+        MD5_FF a, b, c, d, x(k + 12), S11, &H6B901122
+        MD5_FF d,

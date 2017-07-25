@@ -1,0 +1,33 @@
+<%
+' MD5 code:
+' "Derived from the RSA Data Security, Inc. MD5 Message-Digest Algorithm,
+' as set out in the memo RFC1321."
+'
+' Heavily modified from http://www.frez.co.uk/
+'
+' HMAC code:
+' Modified from Authorizenet sample scripts
+%>
+<%
+'
+' Constants used in this script
+'
+Const BITS_TO_A_BYTE = 8
+Const BYTES_TO_A_WORD = 4
+Const BITS_TO_A_WORD = 32
+
+Dim m_lOnBits(30)
+Dim m_l2Power(30)
+ 
+m_lOnBits(0) = CLng(1)
+m_lOnBits(1) = CLng(3)
+m_lOnBits(2) = CLng(7)
+m_lOnBits(3) = CLng(15)
+m_lOnBits(4) = CLng(31)
+m_lOnBits(5) = CLng(63)
+m_lOnBits(6) = CLng(127)
+m_lOnBits(7) = CLng(255)
+m_lOnBits(8) = CLng(511)
+m_lOnBits(9) = CLng(1023)
+m_lOnBits(10) = CLng(2047)
+m_lOnBits(11) = CLng(4095)

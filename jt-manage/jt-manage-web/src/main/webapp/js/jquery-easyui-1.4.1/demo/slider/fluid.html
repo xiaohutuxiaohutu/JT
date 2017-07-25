@@ -1,0 +1,33 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8" %>
+<!DOCTYPE HTML>
+<html>
+	<head>
+	</head>
+	<body>
+		<h1>jsp九大隐式对象 -- out对象</h1>
+		<% out.print("aaa<br/>"); %>
+		<% response.getWriter().write("bbb<br/>"); %>
+		<% out.print("ccc<br/>"); %>
+		
+		
+		<h1>pageContext对象获取其他八大隐式对象</h1>
+		<%
+			pageContext.getPage();
+			pageContext.getRequest();
+			
+			pageContext.setAttribute("name", "张三丰");
+		 %>
+		 
+		 <hr/>
+		 
+		 <%= pageContext.getAttribute("name") %>
+		 
+		 <hr/>
+		 
+		 <h1>pageContext可以操作其他三大作用域中的数据</h1>
+		 <%
+		 	//往request域中存数据
+		 	//pageContext.setAttribute("addr", "北京", PageContext.REQUEST_SCOPE);
+		 	//往session域中存数据
+		 	//pageContext.setAttribute("addr", "上海", PageContext.SESSION_SCOPE);
+		 	//往application域中�

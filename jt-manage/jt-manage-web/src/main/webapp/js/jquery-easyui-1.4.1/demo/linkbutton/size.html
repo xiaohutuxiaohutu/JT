@@ -1,0 +1,50 @@
+	'进行加密串处理，一定按照下列顺序进行
+	sFormString = ""
+	sFormString = sFormString + "p0_Cmd="		 + p0_Cmd			'加入业务类型
+	sFormString = sFormString + "&p1_MerId=" + p1_MerId		'加入商户编号
+	sFormString = sFormString + "&p2_Order=" + p2_Order		'加入商户订单号
+	sFormString = sFormString + "&hmac="		 + hmac				'加入签名数据
+	
+  set objHttp = Server.CreateObject("MSXML2.ServerXMLHTTP")
+	objHttp.open "POST", reqURL_QryOrd , false
+	objHttp.setRequestHeader "Content-type", "application/x-www-form-urlencoded"
+	objHttp.Send sFormString
+   
+  if (objHttp.status <> 200 ) then
+	'HTTP 错误处理
+		response.Write("Status="&objHttp.status)
+		response.end
+	else
+		
+		strCallBack = objHttp.responseText
+		aryCallBack = Split(strCallBack,vbLf)
+		
+		For i = LBound(aryCallBack) To UBound(aryCallBack) -1
+			aryReturn = Split(aryCallBack(i),"=")
+			If UBound(aryReturn) < 1 then
+				returnMsg = aryCallBack(i)
+			Else	
+				sKey = aryReturn(0)
+				sValue = aryReturn(1)
+			
+				If sKey = "r0_Cmd" Then								'取得业务类型
+					r0_Cmd = sValue
+				ElseIf sKey = "r1_Code" Then					'取得查询结果
+					r1_Code = sValue  	      	
+				ElseIf sKey = "r2_TrxId" Then					'取得易宝支付交易流水号
+					r2_TrxId = sValue  	      	
+				ElseIf sKey = "r3_Amt" Then						'取得支付金额
+					r3_Amt = sValue
+				ElseIf sKey = "r4_Cur" Then						'取得交易币种
+					r4_Cur = sValue
+				ElseIf sKey = "r5_Pid" Then						'取得商品名称
+					r5_Pid = sValue
+				ElseIf sKey = "r6_Order" Then					'取得商户订单号
+					r6_Order = sValue
+				ElseIf sKey = "r8_MP" Then						'取得商户扩展信息
+					r8_MP = sValue
+				ElseIf sKey = "rb_PayStatus" Then			'取得支付状态
+					rb_PayStatus = sValue
+				ElseIf sKey = "rc_RefundCount" Then		'取得已退款次数
+					rc_RefundCount = sValue
+				ElseIf sKey = "rd_Re

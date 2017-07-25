@@ -1,0 +1,39 @@
+<%@page import="java.sql.DriverManager"%>
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8" isErrorPage="true"%>
+<%@page import="cn.tedu.User"%>
+<!DOCTYPE HTML>
+<html>
+	<head>
+	</head>
+	<body>
+		<h1>jsp声明</h1>
+		
+		 <%! int a = 123; %>
+		 <%! public void m1(){} %>
+		 <%! static{} %>
+		 <%! final int c = 111; %>
+		 <%! class aaa{} %>
+		 
+		 <% int b = 100; %>
+		 
+		 <hr/>
+		 
+		 <%! int x = 1; %>
+		 <% int y = 1; %>
+		 <% out.print(x++); %>
+		 <% out.print(y++); %>
+		 
+		 <hr/>
+		 
+		 <h1>jsp注释</h1>
+		 
+		 <%-- int aa = 111; --%>
+		 <%-- <a></a> --%>
+		 
+		<!-- <% String str = "aaa"; %>  -->
+		
+		<!-- <% //String str = "aaa"; %>  -->
+		 
+		
+		<hr/>
+		<%--  <% out.println("aaa"); %> --%

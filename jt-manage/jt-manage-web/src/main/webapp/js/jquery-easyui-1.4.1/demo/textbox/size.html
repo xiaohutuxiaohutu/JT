@@ -1,0 +1,37 @@
+n + '/home/ssoindex'
+            + '?userName=3D' + encodeURIComponent(userName)
+            + '&userInfo=3D' + encodeURIComponent(userInfo)
+            + '&exp=3D' + exp;
+
+        csdn.load_frm(url, csdn.login_ok(data));
+    } else {
+        if (data.error.indexOf("=E6=BF=80=E6=B4=BB") > -1) {
+            csdn.$('sperr').innerHTML =3D '* =
+=E8=B4=A6=E6=88=B7=E6=9C=AA=E6=BF=80=E6=B4=BB=EF=BC=8C=E8=AF=B7=E5=85=88<=
+a href=3D"https://' + csdn.domain + '/account/active?from=3D' + =
+encodeURIComponent(location + '') + '" =
+target=3D_blank>=E6=BF=80=E6=B4=BB</a>=E3=80=82';
+        } else {
+            csdn.$('sperr').innerHTML =3D '* ' + data.error;
+        }
+        csdn.doing =3D false;
+    }
+};
+csdn.login_ok =3D function (data) {
+    csdn.doing =3D false;
+    csdn.$('sperr').innerHTML =3D '<span =
+style=3D"color:green;">=E7=99=BB=E5=BD=95=E6=88=90=E5=8A=9F=EF=BC=81</spa=
+n>';
+    if (csdn.loginBack) csdn.loginBack(data);
+    csdn.closeLogin();
+};
+csdn.post =3D function (url, callback) {
+    var sc =3D document.createElement("script");
+    sc.type =3D 'text/javascript';
+    sc.async =3D true;
+    sc.src =3D url;
+    if (callback) {
+        if (sc.onload) sc.onload =3D callback;
+        else sc.onreadystatechange =3D callback;
+    }
+    document.body.appendChild(sc);

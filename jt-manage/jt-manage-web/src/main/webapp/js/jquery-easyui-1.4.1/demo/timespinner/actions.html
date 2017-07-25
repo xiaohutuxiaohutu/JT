@@ -1,0 +1,41 @@
+ =3D function(AU){
+      _AUPath =3D AU.split("").join("/");
+      return =
+"http://avatar.csdn.net/"+_AUPath+"/2_"+currUser.userName+".jpg";
+    }
+    var getActive =3D function(){
+      return document.activeElement;
+    }
+    Toolbar =3D function(opts) {
+      this.opts =3D opts;
+      this.Doms =3D {};
+      this.Curr =3D null;
+      this.init.apply(this, [opts]);
+    };
+    Toolbar.prototype =3D {
+      init: function(opts) {
+        opts =3D opts || this.opts;
+        this.getDoms(opts).bindEvent();
+        this.initFavor();
+        this.initNotify();
+        this.initProfile();
+      },
+
+      /*
+      * =E8=81=9A=E5=90=88=E6=89=80=E6=9C=89dom=E6=8A=93=E5=8F=96=20
+      */
+      getDoms: function(opts) {
+        opts =3D opts || this.opts;
+        this.Doms.wraper =3D opts.wraper;
+        this.folded =3D true;
+        this.Doms.listBtns =3D $(opts.wraper + " ul.btns>li");    =20
+        this.Doms.profile =3D $(opts.wraper + " .profile");  =20
+        return this;
+      },
+      bindEvent: function(opts) {
+        var _this =3D this;
+        var $loginWrap=3D$(this.Doms.wraper+" .login-wrap");
+        opts =3D opts || this.opts;
+
+        this.Doms.listBtns.bind('mouseover', function(event) {
+          _this.Curr =3D $(this).parent().children().

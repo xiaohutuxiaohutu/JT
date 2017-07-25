@@ -1,0 +1,98 @@
+package cn.tedu.utils;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.sql.DataSource;
+
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+
+public class DaoUtils {
+	private static ComboPooledDataSource pool = 
+			new ComboPooledDataSource();
+	private DaoUtils(){}
+	/**
+	 * 返回数据库连接池
+	 * @return
+	 */
+	public static DataSource getPool(){
+		return pool;
+	}
+	public static Connection getConn() {
+		try {
+			return getPool().getConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	public static <T> T query(String sql, ResultSetHandler<T> rsh, Object... params){
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try{
+			conn = TranManager.getConn();
+			ps = conn.prepareStatement(sql);
+			//为占位符赋值
+			for(int i = 1;i<=params.length;i++){
+				ps.setObject(i, params[i-1]);
+			}
+			//执行查询操作，并返回结果集
+			rs = ps.executeQuery();
+			return rsh.handle(rs);
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}finally{
+			//千千万万不要关闭数据库连接
+			close(null, ps, rs);
+		}
+	}
+	/*public static <T> T query(Connection conn,String sql, ResultSetHandler<T> rsh, Object... params){
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try{
+			ps = conn.prepareStatement(sql);
+			//为占位符赋值
+			for(int i = 1;i<=params.length;i++){
+				ps.setObject(i, params[i-1]);
+			}
+			//执行查询操作，并返回结果集
+			rs = ps.executeQuery();
+			return rsh.handle(rs);
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}finally{
+			//千千万万不要关闭数据库连接对象conn
+			close(null, ps, rs);
+		}
+	}*/
+	public static int update(String sql, Object... params){
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try{
+			conn = TranManager.getConn();
+			//预编译sql语句，并返回ps对象
+			ps = conn.prepareStatement(sql);
+			//为占位符赋值
+			for(int i =0;i<params.length;i++){
+				ps.setObject(i+1, params[i]);
+			}
+			//执行操作，并返回影响的行数
+			int row = ps.executeUpdate();
+			return row;
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}finally{
+			//关闭连接释放资源:千千万万不要关闭数据库连接
+			close(null,ps,null);
+		}
+	}
+	/*public static int update(Connection conn,String sql, Object... params){
+		PreparedStatement ps = null;
+		try{
+		

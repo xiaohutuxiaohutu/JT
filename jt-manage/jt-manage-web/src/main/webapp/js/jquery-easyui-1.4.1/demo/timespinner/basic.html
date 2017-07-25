@@ -1,0 +1,21 @@
+);
+          $(_wraper+" .favor-form").show();
+          $(document.body).trigger("toolbar-fold");
+        });
+
+
+        $submit.bind("click",function(e){
+          var _data =3D {
+            title:$title.val(),
+            //url:encodeURIComponent($url.val()),
+            url:$url.val(),
+            description:$description.val(),
+            tag:$tag.val(),
+            share:$share[0].checked
+          }
+          function resetForm(){
+            $(_wraper+" .title").val($title.val());
+            $(_wraper+" .url").val(window.location.href);
+            $(_wraper+" .tag").val("");
+            $(_wraper+" .description").val("");
+          

@@ -1,0 +1,7 @@
+com\jt\manage\mapper\ItemParamMapper.class
+com\jt\manage\mapper\ItemCatMapper.class
+com\jt\manage\mapper\ItemParamItemMapper.class
+com\jt\manage\mapper\ItemDescMapper.class
+com\jt\manage\mapper\ContentMapper.class
+com\jt\manage\mapper\ItemMapper.class
+com\jt\manage\mapper\ContentCategoryMapper.class

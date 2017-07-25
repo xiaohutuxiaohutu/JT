@@ -1,0 +1,32 @@
+退款请求发送到该地址；
+	'2.该应用会将请求参数逐一分析，如请求有问题，则会报告详细信息；
+	'3.请求参数如正确无误，该应用将生成一个模拟的支付成功数据，您可以使用该数据测试支付结果的接收程序。
+	
+	'订单退款请求，固定值"RefundOrd"					
+	p0_Cmd				= "RefundOrd"																									
+
+	'进行加密串处理，一定按照下列顺序进行
+	sbOld =	""
+	sbOld = sbOld + p0_Cmd					'加入业务类型
+	sbOld = sbOld + p1_MerId				'加入商户编号
+	sbOld = sbOld + pb_TrxId				'加入易宝支付交易流水号
+	sbOld = sbOld + p3_Amt					'加入退款金额
+	sbOld = sbOld + p4_Cur					'加入交易币种
+	sbOld = sbOld + p5_Desc					'加入退款说明
+	
+	hmac	= ""
+	hmac	= HmacMd5(sbOld,merchantKey)
+	
+	'进行加密串处理，一定按照下列顺序进行
+	sFormString = ""
+	sFormString = sFormString + "p0_Cmd="		 + p0_Cmd			'加入业务类型
+	sFormString = sFormString + "&p1_MerId=" + p1_MerId		'加入商户编号
+	sFormString = sFormString + "&pb_TrxId=" + pb_TrxId		'加入易宝支付交易流水号
+	sFormString = sFormString + "&p3_Amt="	 + p3_Amt			'加入退款金额
+	sFormString = sFormString + "&p4_Cur="   + p4_Cur			'加入交易币种
+	sFormString = sFormString + "&p5_Desc="  + p5_Desc		'加入退款说明
+	sFormString = sFormString + "&hmac="		 + hmac				'加入签名数据
+	
+  set objHttp = Server.CreateObject("MSXML2.ServerXMLHTTP")
+	objHttp.open "POST", reqURL_RefOrd , false
+	objHt

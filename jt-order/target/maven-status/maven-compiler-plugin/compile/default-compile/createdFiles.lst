@@ -1,0 +1,7 @@
+com\jt\order\pojo\OrderShipping.class
+com\jt\order\mapper\OrderMapper.class
+com\jt\order\job\PaymentOrderJob.class
+com\jt\order\controller\OrderController.class
+com\jt\order\service\OrderService.class
+com\jt\order\pojo\OrderItem.class
+com\jt\order\pojo\Order.class

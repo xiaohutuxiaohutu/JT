@@ -1,0 +1,66 @@
+PL/SQL Developer Report
+
+[SQL]
+select p.* from user_tab_privs_recd p
+where p.grantor like &<name="授权者"
+                       hint="授权者(允许使用通配符)"
+                       type="string"
+                       default="%"
+                       ifempty="%"
+                       list="select username from all_users order by username">
+order by p.grantor, p.table_name, p.privilege
+
+[Options]
+Connect=False
+Username=
+Password=2047
+Database=
+ConnectAs=
+LockMode=0
+LockedPassword=2522
+BkgColor=-2147483643
+BkgImage=
+FormLayout=False
+OnlyNBSP=False
+LeftMargin=0
+TopMargin=0
+PageBreak=0
+AddSQL=False
+
+[Styles]
+
+{Title}
+Enabled=True
+Name=Report Title
+Description=被接收的对象权限
+Style=
+HeaderStyle=
+Align=0
+Break=0
+Function=0
+Format=
+
+{Param}
+Enabled=True
+Name=Variables
+Description=
+Style=
+HeaderStyle=
+Align=0
+Break=0
+Function=0
+Format=
+
+{Table}
+Enabled=False
+Name=Tabular Tables
+Description=
+Style=
+HeaderStyle=
+Align=0
+Break=0
+Function=0
+Format=
+
+{Form}
+Enabled=Fals

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jt.sso.mapper.UserMapper">
+
+	<!--  map代表接收的参数类型， resultType表示返回结果只-->
+	<select id="check"  parameterType="map" resultType="int">
+	<!-- ${name} $获取的值本身有注入风险，但此处获取的值不是用户输入的，是mybatis获取的 -->
+		select count(*) from tb_user where ${colname}=#{val}
+	
+	</select>
+</mapper>

@@ -1,0 +1,35 @@
+/*
+SQLyog Ultimate v8.32 
+MySQL - 5.0.22-community-nt : Database - easymall
+*********************************************************************
+*/
+
+/*!40101 SET NAMES utf8 */;
+
+/*!40101 SET SQL_MODE=''*/;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`easymall` /*!40100 DEFAULT CHARACTER SET utf8 */;
+
+USE `easymall`;
+
+/*Table structure for table `orderitem` */
+
+DROP TABLE IF EXISTS `orderitem`;
+
+CREATE TABLE `orderitem` (
+  `order_id` varchar(100) NOT NULL default '',
+  `product_id` varchar(100) NOT NULL default '',
+  `buynum` int(11) default NULL,
+  PRIMARY KEY  (`order_id`,`product_id`),
+  KEY `product_id` (`product_id`),
+  CONSTRAINT `orderitem_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
+  CONSTRAINT `orderitem_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `orderitem` */
+
+insert  into `orderitem`(`order_id`,`product_id`,`buynum`) values ('08b5b547-9f33-4c97-8203-014acdaf8fbc','16c653b3-da6b-49ad-8b61-a7263894e575',1),('08b5b547-9f33-4c97-8203-014acdaf8fbc','327e1fdd-1f11-4ebb-ba49-94882585cc96',1),('255895b4-428f-4ccd-89b6-38111e6a13f8','0afc774a-b6b7-4f17-95a9-17da3df3a0ea',1),('255895b4-428f-4ccd-89b6-38111e6a13f8','327e1fdd-1f11-4ebb-ba49-94882585cc96',1),('9c8b72cf-22e0-402a-addd-6b117a67c29c','16c653b3-da6b-49ad-8b61-a7263894e575',1),('9c8b72cf-22e0-402a-addd-6b117a67c29c','327e1fdd-1f11-4ebb-ba49-94882585cc96',1),('a8e64d30-7695-4c27-a986-b2508c3345ef','31c83d21-9e3e-4efb-bb64-39a537711eea',1),('a8e64d30-7695-4c27-a986-b2508c3345ef','c0b17be3-5d1b-41d8-8e49-599989d9392d',1),('b232bc54-95a1-4264-bfdf-05206d1c7d49','16c653b3-da6b-49ad-8b61-a7263894e575',1),('b2660a53-cb16-4124-aedf-3ce5823381d8','16c653b3-

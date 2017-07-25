@@ -1,0 +1,32 @@
+package cn.tedu;
+
+import java.io.IOException;
+import java.util.Date;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class TestServlet extends HttpServlet {
+
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		System.out.println("TestServlet.doGet()......");
+		String dateStr = new Date().toLocaleString();
+		response.getWriter().write("<!doctype html>");
+		response.getWriter().write("<html>");
+		response.getWriter().write("<head>");
+		response.getWriter().write("</head>");
+		response.getWriter().write("<body>");
+		response.getWriter().write(dateStr);
+		response.getWriter().write("</body>");
+		response.getWriter().write("</html>");
+		
+		try {
+			//int i = 1/0;
+		} catch (Exception e) {
+			e.printStackTrace();
+			//throw new RuntimeException(e);
+			response.sendRe

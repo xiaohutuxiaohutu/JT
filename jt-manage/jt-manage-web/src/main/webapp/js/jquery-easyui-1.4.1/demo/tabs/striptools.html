@@ -1,0 +1,80 @@
+package utils;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.sql.DataSource;
+
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+
+public class DaoUtils {
+	private DaoUtils () {}
+	private static DataSource pool=new ComboPooledDataSource();
+	
+	public static DataSource getPool(){
+		return pool;
+	}
+	
+	/**
+	 * 从连接池中获取连接
+	 * @return
+	 * @throws Exception
+	 */
+	public static Connection getConn() throws Exception{
+		return pool.getConnection();
+	}
+	
+	/**
+	 * 自定义查询方法
+	 * @param sql
+	 * @param params
+	 * @return
+	 */
+	public static <T> T query(String sql,ResultSetHandler<T> rsh,Object...params){
+		Connection conn =null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			conn=getConn();
+			ps=conn.prepareStatement(sql);
+			for(int i=0;i<params.length;i++){
+				ps.setObject(i+1, params[i]);
+			}
+			rs=ps.executeQuery();
+			return rsh.handle(rs);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			close(conn, ps, null);
+		}
+		return null;
+		
+	}
+	
+	/**
+	 * 自定义增删改功能
+	 * @param sql 执行语句
+	 * @param params 不定个数参数
+	 * @return 影响的行数
+	 * @throws SQLException
+	 */
+	public static int update(String sql,Object...params){		
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try {
+			conn = getConn();
+			ps=conn.prepareStatement(sql);
+			//不需要判断参数是否==null，当不传参数时，数组长度为0.不会为null
+			for(int i=0;i<params.length;i++){
+				ps.setObject(i+1, params[i]);
+			}
+			int row = ps.executeUpdate();
+			return row;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}finally{
+			close(co

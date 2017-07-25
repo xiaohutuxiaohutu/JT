@@ -1,0 +1,44 @@
+package cn.tedu.web;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import cn.tedu.domain.Order;
+import cn.tedu.domain.OrderItem;
+import cn.tedu.domain.Product;
+import cn.tedu.domain.User;
+import cn.tedu.exception.MsgException;
+import cn.tedu.factory.BasicFactory;
+import cn.tedu.service.OrderService;
+
+public class OrderAddServlet extends HttpServlet {
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doPost(request, response);
+	}
+
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		//1、判断是否登录
+		Object userObj = request.getSession().getAttribute("user");
+		if(userObj==null){//未登录
+			response.sendRedirect(request.getContextPath()+"/login.jsp");
+			return;
+		}
+		//2、从session获取购物车的信息
+		Object cartObj = request.getSession().getAttribute("cart");
+		if(cartObj==null){//session失效了
+			//跳转到首页
+			request.getRequestDispatcher("/index.jsp").forward(request, response);
+			return;
+		}

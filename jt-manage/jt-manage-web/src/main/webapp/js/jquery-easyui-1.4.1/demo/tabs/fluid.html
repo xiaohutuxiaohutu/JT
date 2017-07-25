@@ -1,0 +1,39 @@
+package serviceImpl;
+
+import service.UserService;
+import dao.UserDao;
+import domain.User;
+import exception.MsgException;
+import factory.BasicFactory;
+
+public class UserServiceImpl implements UserService {
+	private UserDao dao =BasicFactory.getFactory().getInstance(UserDao.class);
+/**
+ * 注册用户
+ * @param user
+ * @throws MsgException 
+ */
+	public void registUser(User user) throws MsgException {
+		//检查用户名是否存在
+		User u = dao.findUserByUsername(user.getUsername());
+		if(u!=null){
+			throw new MsgException("用户名已存在");
+		}
+		dao.addUser(user);	
+	}
+/**
+ * 注册用户
+ * @param password  密码
+ * @param username 用户名
+ */
+public User loginUser(String username, String password) {
+	
+	return dao.findUserByusernameAndPassword(username,password);
+
+}
+/**
+ * 
+ * @param username
+ * @return
+ */
+public boolean hasU

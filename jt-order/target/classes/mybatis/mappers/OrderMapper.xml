@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jt.order.mapper.OrderMapper">
+
+<!--多表关联查询用  autoMapping="true" 自动驼峰映射 -->
+
+	<!--多表关联查询用  autoMapping="true" 自动驼峰映射 -->
+	<resultMap type="Order" id="OrderRm" autoMapping="true" >
+		<id property="orderId" column="oreder_id" />
+	
+		<!-- 有上下关系，订单和物流一对一，必须放在前面 -->
+		<association property="orderShipping" select="orderShippingByOrderId" javaType="OrderShipping" column="order_id">
+			<id property="orderId" column="order_id"/>
+		</association>
+		
+		<!-- 订单和商品一对多-->
+		<collection property="orderItems" select="orderItemByOrderId" javaType="ArrayList" ofType="OrderItem" column="order_id">
+			<id property="itemId" column="item_id"/>
+			<id property="orderId" column="order_id"/>
+		</collection>
+		
+	</resultMap>
+	
+	<!--  按订单查询-->
+	<select id="queryByOrderId" parameterType="string" resultMap="OrderRm">
+		select * from tb_order where order_id=#{orderId}
+	</select>
+	
+	<!-- 某个订单对应的物流信息 -->
+	<select id="orderShippingByOrderId" parameterType="string" resultType="OrderShipping">
+		select * from tb_order_shipping where order_id=#{orderId}
+	</select>
+	
+	<!--某个订单对应的商品信息  -->
+	<select id="orderItemByOrderId" parameterType="string" resultType="OrderItem">
+		select * from tb_order_item where order_id=#{orderId}
+	</select>
+	
+	<!-- 创建订单 -->
+	<select id="create" parameterType="Order">
+		insert into tb_order(order_id,payment,payment_type,post_fee,status,created,updated,payment_time,consign_time,end_time,close_time,shipping_name,shipping_code,user_id,buyer_message,buyer_nick,buyer_rate) 
+		values(#{orderId},#{payment},#{paymentType},#{postFee},1,now(),now(),#{paymentTime},#{consignTime},#{endTime},#{closeTime},#{shippingName},#{shippingCode},#{userId},#{buyerMessage},#{buyerNick},#{buyerRate});
+		
+		insert into tb_order_shipping(order_id,receiver_name,receiver_phone,receiver_mobile,receiver_state,receiver_city,receiver_district,receiver_address,receiver_zip,created,updated)
+		values(#{orderId},#{orderShipping.receiverName},#{orderShipping.receiverPhone},#{orderShipping.receiverMobile},#{orderShipping.receiverState},#{orderShipping.receiverCity},#{orderShipping.receiverDistrict},#{orderShipping.receiverAddress},#{orderShipping.receiverZip},now(),now());
+		
+		insert into tb_order_item(item_id,order_id,num,title,price,total_fee,pic_path)
+		values
+		<foreach collection="orderItems" item="item" separator=",">
+		
+		(#{item.itemId},#{orderId},#{item.num},#{item.title},#{item.price},#{item.totalFee},#{item.picPath})
+		</foreach>
+
+	</select>
+	<!--  -->
+	<select id="selectByBuyerNick" parameterType="string" resultType="ArrayList">
+		select * from tb_order where buyer_nick=#{buyerNick}
+	
+	</select>
+	<!-- 处理为支付的订单 -->
+	<update id="paymentOrderScan" parameterType="Date">
+		update tb_order set Status=6,end_time=NOW(),close_time=NOW()
+		where payment_type=1 and status=1 and created &lt; #{date}
+	</update>
+	
+</mapper>
